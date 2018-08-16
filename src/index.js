@@ -13,7 +13,20 @@ const cl = myvarX => console.log(myvarX)
 const clto = myvarY => cl(to(myvarY))
 const desiredPath = folderPath => process.cwd() + '/' + folderPath
 
+const  compile = require("string-template/compile")
+const  greetingTemplate = compile("export default {0}")
+const  greeting = greetingTemplate("Robert", 12)
+
 const fileOrFolder = (fileOrFolder) => fileOrFolder.split('.').length > 1
+
+const createFile = (fileNamePath, base64Val) => {
+  const stringTemplateFileNamePath = fileNamePath+'.js'
+  const fileConents = `module.exports = '${base64Val}'`
+  fs.appendFile(stringTemplateFileNamePath, fileConents, (err) => {
+    if (err) throw err;
+    cl('Saved '+stringTemplateFileNamePath)
+  })
+}
 
 if(argv.inline) {
   shell.echo('XXXXXXXXXXXXXXXXXXXXXXLETS INLINEXXXXXXXXXXXXXXXXXXXXXX\n\n')
@@ -30,40 +43,28 @@ if(argv.inline) {
   // Temporarily remove fonts folder
   folderList.splice(1, 1);
 
-  const goIntoFolderAndDoMagic = (folder) => {
-    // Make compiled folder
-    // shell.mkdir('inlined')
-    
+  const goIntoFolderAndDoMagic = (folder) => {    
     // // Go into one folder
-    // shell.cd(folder)
+    shell.cd(folder)
 
     // // List all the files
-    // const filesList = shell.ls('-A','./')
+    const filesList = shell.ls('-A','./')
 
     // // For each file in list
-    // filesList.forEach(arrayitem => {
-    //   cl(arrayitem)
-    //   // cl(process.cwd())
-
-    //   base64Img.base64(arrayitem, (err, data) => {
-    //     if(err) throw err
-    //     shell.cd('../inlined/'+folder)
-    //     createFile(arrayitem, data)
-    //     shell.cd('../../'+folder)
-    //   })
-    // })
-    // shell.cd('..')
+    filesList.forEach(arrayitem => {
+      base64Img.base64(arrayitem, (err, data) => {
+        if(err) throw err
+        createFile('../inlined/'+folder+'/'+arrayitem, data)
+      })
+    })
+    shell.cd('..')
   }
 
   folderList.forEach(arrayitem => {
-    cl(arrayitem)
-    // shell.cd('..')
-    // shell.cd('inlined')
-    // shell.mkdir(arrayitem)
-    // shell.cd('..')
-    // fileOrFolder(arrayitem)
-    //   ? null
-    //   : goIntoFolderAndDoMagic(arrayitem)
+    shell.mkdir('../inlined/'+arrayitem)
+    fileOrFolder(arrayitem)
+      ? null
+      : goIntoFolderAndDoMagic(arrayitem)
   })
 
   shell.echo('\n\n\n\n\n\n\n\nXXXXXXXXXXXXXXXXXXXXXXLETS INLINEXXXXXXXXXXXXXXXXXXXXXX')
