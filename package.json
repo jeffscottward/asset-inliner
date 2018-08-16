@@ -2,7 +2,7 @@
   "name": "asset-inliner",
   "version": "1.0.0",
   "description": "Asset inliner for component authoring",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "regen": "npm run recycle && npm run inline",
     "recycle": "node src/index.js --recycle",
@@ -16,7 +16,7 @@
   "dependencies": {
     "base64-img": "^1.0.4",
     "minimist": "^1.2.0",
-    "shelljs": "^0.8.2",
+    "shelljs": "^0.8.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
