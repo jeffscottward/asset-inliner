@@ -15,10 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "base64-img": "^1.0.4",
-    "lodash": "^4.17.10",
     "minimist": "^1.2.0",
     "shelljs": "^0.8.2",
-    "string-template": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"

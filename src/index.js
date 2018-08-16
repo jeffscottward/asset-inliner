@@ -1,36 +1,21 @@
-const shell = require('shelljs')
-const lodash = require('lodash')
 const fs = require('fs')
 const argv = require('minimist')(process.argv.slice(2))
-
-// Image Encode
+const shell = require('shelljs')
 const base64Img = require('base64-img')
 
 // Utils
-const to = myvar => typeof myvar
-const clBig = myvarZ => console.log(Object.values(myvarX))
-const cl = myvarX => console.log(myvarX)
-const clto = myvarY => cl(to(myvarY))
-const desiredPath = folderPath => process.cwd() + '/' + folderPath
-
-const  compile = require("string-template/compile")
-const  greetingTemplate = compile("export default {0}")
-const  greeting = greetingTemplate("Robert", 12)
-
 const fileOrFolder = (fileOrFolder) => fileOrFolder.split('.').length > 1
 
 const createFile = (fileNamePath, base64Val) => {
   const stringTemplateFileNamePath = fileNamePath+'.js'
   const fileConents = `module.exports = '${base64Val}'`
+
   fs.appendFile(stringTemplateFileNamePath, fileConents, (err) => {
     if (err) throw err;
-    cl('Saved '+stringTemplateFileNamePath)
   })
 }
 
 if(argv.inline) {
-  shell.echo('XXXXXXXXXXXXXXXXXXXXXXLETS INLINEXXXXXXXXXXXXXXXXXXXXXX\n\n')
-
   // Inlined 
   shell.mkdir('inlined')
   
@@ -40,8 +25,9 @@ if(argv.inline) {
   // Folder list
   let folderList = shell.ls('-A','./')
   
-  // Temporarily remove fonts folder
-  folderList.splice(1, 1);
+  // Remove fonts folder from list
+  // Base64 encoding available through https://transfonter.org/
+  folderList = folderList.filter(e => e !== 'fonts')
 
   const goIntoFolderAndDoMagic = (folder) => {    
     // // Go into one folder
@@ -62,13 +48,16 @@ if(argv.inline) {
 
   folderList.forEach(arrayitem => {
     shell.mkdir('../inlined/'+arrayitem)
-    fileOrFolder(arrayitem)
-      ? null
-      : goIntoFolderAndDoMagic(arrayitem)
+    // Make sure its a folder, not .DS_STORE
+    if(!fileOrFolder(arrayitem)){
+      goIntoFolderAndDoMagic(arrayitem)
+    }
   })
 
-  shell.echo('\n\n\n\n\n\n\n\nXXXXXXXXXXXXXXXXXXXXXXLETS INLINEXXXXXXXXXXXXXXXXXXXXXX')
+  // cl(process.cwd())
+  shell.cp('-R', 'fonts', '../inlined/fonts')
 }
+
 if(argv.recycle) {
   shell.rm('-rf', 'inlined')
 }
