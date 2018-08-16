@@ -4,9 +4,9 @@
   "description": "Asset inliner for component authoring",
   "main": "index.js",
   "scripts": {
-    "recycle": "node index.js --recycle",
-    "inline": "node index.js --inline",
-    "dev": "npx nodemon --exec 'npm run recycle && npm run inline' ./index.js",
+    "recycle": "node src/index.js --recycle",
+    "inline": "node src/index.js --inline",
+    "dev": "npx nodemon --exec 'npm run recycle && npm run inline' ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
