@@ -1,5 +1,5 @@
 {
-  "name": "asset-inliner",
+  "name": "qs-ui-library-asset-inliner",
   "version": "1.0.0",
   "description": "Asset inliner for component authoring",
   "main": "src/index.js",
