@@ -2,12 +2,12 @@
   "name": "qs-ui-library-asset-inliner",
   "version": "1.0.0",
   "description": "Asset inliner for component authoring",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "regen": "npm run recycle && npm run inline",
-    "recycle": "node src/index.js --recycle",
-    "inline": "node src/index.js --inline",
-    "dev": "npx nodemon --exec 'npm run regen' ./src/index.js",
+    "recycle": "node src/inliner.js --recycle",
+    "inline": "node src/inliner.js --inline",
+    "dev": "npx nodemon --exec 'npm run regen' ./src/inliner.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
